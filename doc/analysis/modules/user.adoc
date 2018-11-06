@@ -12,7 +12,7 @@
 
 == Диаграмма классов
 
-[plantuml,format="pvg"]
+[plantuml,format="svg"]
 --
 include::analysis\diagrams\UserInteraction.puml[]
 --
