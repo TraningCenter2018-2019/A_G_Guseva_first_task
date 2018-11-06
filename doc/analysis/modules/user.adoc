@@ -12,9 +12,9 @@
 
 == Диаграмма классов
 
-[plantuml,format="png"]
+[plantuml,format="pvg"]
 --
-include::..analysis\diagrams\UserInteraction.puml[]
+include::analysis\diagrams\UserInteraction.puml[]
 --
 
 Класс *UserMenu* используется для выбора режима. При вызове метода *CrosswordMode* пользователю будет предложено выбрать один из двух режимов. +
