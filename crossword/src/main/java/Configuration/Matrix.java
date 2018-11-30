@@ -111,14 +111,14 @@ public class Matrix {
         }
       }
 
-      //доавляем горизонтальные
+      //add horizontal
       stop = false;
       for (int j = numOfStr + 1; j < size && !freeWords.isEmpty() && !stop && !found; j++) {
         scheme = new Scheme();
         scheme.findPlace(this, j, 0, 0);//0-str, 1- column
         ArrayList<Integer> possibleWords = words.getFittedWords(scheme, freeWords);
         int pop = 1;
-        while (possibleWords == null && scheme.constrains.size() > 1)//сдвигаем схему вправо
+        while (possibleWords == null && scheme.constrains.size() > 1)//moving scheme to the right side
         {
           scheme = new Scheme();
           scheme.findPlace(this, i, 1, pop);//0-str, 1- column

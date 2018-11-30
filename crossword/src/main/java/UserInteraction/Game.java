@@ -36,15 +36,15 @@ public class Game {
   }
 
   TextGraphics printField(Screen screen, TextGraphics tg) {
-    boolean posForCursos = false;
+    boolean posForCursor = false;
     for (int i = 0; i < size; i++)
       for (int j = 0; j < size; j++) {
         tg.putString(j, i, field[i][j] ? (crossword[i][j] == "x" ?
                 String.valueOf(Symbols.SINGLE_LINE_CROSS) : crossword[i][j]) :
                 String.valueOf(Symbols.SOLID_SQUARE));
-        if (field[i][j] && !posForCursos) {
+        if (field[i][j] && !posForCursor) {
           screen.setCursorPosition(new TerminalPosition(j, i));
-          posForCursos = true;
+          posForCursor = true;
         }
       }
     return tg;

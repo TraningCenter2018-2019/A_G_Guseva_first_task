@@ -17,7 +17,6 @@ public class PrintVSlogic {
   public int size;
 
   public PrintVSlogic() {
-    //this.field = new boolean[][]{{true,true,false,true},{true,false,false,true},{false,true,false,true},{false,false,false,true}};
   }
 
   ArrayList<Integer> addNew(ArrayList<Integer> l, int num) {

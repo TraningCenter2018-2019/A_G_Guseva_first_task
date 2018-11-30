@@ -27,8 +27,4 @@ public class Cell {
     vert = c.vert;
   }
 
-  public boolean isBlack() {
-    return false;
-  }
-
 }

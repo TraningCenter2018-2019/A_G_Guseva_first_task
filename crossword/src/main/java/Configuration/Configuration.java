@@ -49,33 +49,31 @@ public class Configuration {
       m.copyMatrix(bestVariant);
     }
     return m;
-
   }
 
-  void print(Matrix m) {
+  private void printCell(Matrix m, int i,int j){
+    if (m.matrixOfFreeCells[i][j] == true)
+      System.out.print('*');
+    else {
+      if ((m.matrixOfWords[i][j].hor >= 0) && (m.matrixOfWords[i][j].vert >= 0))
+        System.out.print('?');
+      else if (m.matrixOfWords[i][j].hor >= 0)
+        System.out.print(m.matrixOfWords[i][j].hor);
+      else
+        System.out.print(m.matrixOfWords[i][j].vert);
+    }
+  }
+
+  private void printMatrixWithNums(Matrix m){
     for (int i = 0; i < m.size; i++) {
       for (int j = 0; j < m.size; j++)
-        if (m.matrixOfFreeCells[i][j] == true)
-          System.out.print('*');
-        else {
-          if ((m.matrixOfWords[i][j].hor >= 0) && (m.matrixOfWords[i][j].vert >= 0))
-            System.out.print('?');
-          else if (m.matrixOfWords[i][j].hor >= 0)
-            System.out.print(m.matrixOfWords[i][j].hor);
-          else
-            System.out.print(m.matrixOfWords[i][j].vert);
-                    /*if(m.matrixOfWords[i][j].hor!=m.matrixOfWords[i][j].vert)
-                        System.out.print('?');
-                    else
-                        System.out.print(m.matrixOfWords[i][j].letter);
-                        */
-        }
-
+        printCell(m,i,j);
       System.out.println();
     }
     System.out.println();
-    System.out.println("Количество слов: " + m.amountOfWords);
+  }
 
+  private void printMatrixWithLetters(Matrix m){
     for (int i = 0; i < m.size; i++) {
       for (int j = 0; j < m.size; j++)
         if (m.matrixOfFreeCells[i][j] == true)
@@ -83,19 +81,17 @@ public class Configuration {
         else {
 
           System.out.print(m.matrixOfWords[i][j].letter);
-                    /*if(m.matrixOfWords[i][j].hor!=m.matrixOfWords[i][j].vert)
-                        System.out.print('?');
-                    else
-                        System.out.print(m.matrixOfWords[i][j].letter);
-                        */
         }
 
       System.out.println();
     }
     System.out.println();
+  }
+
+  private void print(Matrix m) {
+    printMatrixWithNums(m);
+    printMatrixWithLetters(m);
     System.out.println("Количество слов: " + m.amountOfWords);
-
-
   }
 
 
