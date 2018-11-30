@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class Words {
   String[] words;
   HashMap<Character, HashMap<Integer, ArrayList<Integer>>> BigMap;
-  //public int amount;
   private int numOfWord;
   public int sizeOfField;
 
@@ -56,30 +55,37 @@ public class Words {
     numOfWord++;
   }
 
+  private ArrayList<Integer> getWordsForMultipleConstrain(Scheme scheme){
+    ArrayList<Integer> specialWords1 = new ArrayList<Integer>();
+    ArrayList<Integer> specialWords2 = new ArrayList<Integer>();
+    if (specialWords2 != null) {
+      for (Constrains cs : scheme.constrains) {
+        specialWords2 = BigMap.get(cs.letter).get(cs.pos);
+        if (specialWords2 != null)
+          specialWords1.retainAll(specialWords2);
+        else {
+          specialWords1 = null;
+          break;
+        }
+      }
+    }
+    return specialWords1;
+  }
+
   public ArrayList<Integer> getFittedWords(Scheme scheme, ArrayList<Integer> freeWords) {
     ArrayList<Integer> specialWords1 = new ArrayList<Integer>();
     if (!scheme.constrains.isEmpty()) {
       if (scheme.constrains.size() != 1) {
-        ArrayList<Integer> specialWords2 = new ArrayList<Integer>();
-        if (specialWords2 != null) {
-          for (Constrains cs : scheme.constrains) {
-            specialWords2 = BigMap.get(cs.letter).get(cs.pos);
-            if (specialWords2 != null)
-              specialWords1.retainAll(specialWords2);
-            else {
-              specialWords1 = null;
-              break;
-            }
-
-          }
-        }
-
-      } else
+        getWordsForMultipleConstrain(scheme);
+      }
+      else
         specialWords1 = BigMap.get(scheme.constrains.get(0).letter).get(scheme.constrains.get(0).pos);
     } else {
       for (int i = 0; i < words.length; i++)
         specialWords1.add(i);
     }
+
+
     if (specialWords1 != null) {
       for (int var = 0; var < specialWords1.size(); var++) {
         if (!freeWords.contains(specialWords1.get(var)) || words[var].length() > scheme.maxSize) {

@@ -27,6 +27,25 @@ public class PrintVSlogic {
     return l;
   }
 
+  private void setCell(Matrix m,int i,int j){
+    if (m.matrixOfFreeCells[i][j])
+      letters[i][j] = "";
+    else {
+      forCheck[i][j] = m.matrixOfWords[i][j].letter;
+      if ((m.matrixOfWords[i][j].hor >= 0) && (m.matrixOfWords[i][j].vert >= 0)) {
+        letters[i][j] = "x";
+        vertDescr = addNew(vertDescr, m.matrixOfWords[i][j].vert);
+        horDescr = addNew(horDescr, m.matrixOfWords[i][j].hor);
+      } else if (m.matrixOfWords[i][j].hor >= 0) {
+        letters[i][j] = m.matrixOfWords[i][j].hor + "";
+        horDescr = addNew(horDescr, m.matrixOfWords[i][j].hor);
+      } else {
+        letters[i][j] = m.matrixOfWords[i][j].vert + "";
+        vertDescr = addNew(vertDescr, m.matrixOfWords[i][j].vert);
+      }
+    }
+  }
+
   public void setFieldForPrint(Matrix m) {
     vertDescr = new ArrayList<Integer>();
     horDescr = new ArrayList<Integer>();
@@ -40,22 +59,7 @@ public class PrintVSlogic {
     letters = new String[m.size][m.size];
     for (int i = 0; i < m.size; i++)
       for (int j = 0; j < m.size; j++)
-        if (m.matrixOfFreeCells[i][j])
-          letters[i][j] = "";
-        else {
-          forCheck[i][j] = m.matrixOfWords[i][j].letter;
-          if ((m.matrixOfWords[i][j].hor >= 0) && (m.matrixOfWords[i][j].vert >= 0)) {
-            letters[i][j] = "x";
-            vertDescr = addNew(vertDescr, m.matrixOfWords[i][j].vert);
-            horDescr = addNew(horDescr, m.matrixOfWords[i][j].hor);
-          } else if (m.matrixOfWords[i][j].hor >= 0) {
-            letters[i][j] = m.matrixOfWords[i][j].hor + "";
-            horDescr = addNew(horDescr, m.matrixOfWords[i][j].hor);
-          } else {
-            letters[i][j] = m.matrixOfWords[i][j].vert + "";
-            vertDescr = addNew(vertDescr, m.matrixOfWords[i][j].vert);
-          }
-        }
+        setCell(m,i,j);
   }
 
   public void makeDescription(ArrayList<String> d) {

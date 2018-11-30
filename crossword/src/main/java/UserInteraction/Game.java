@@ -128,6 +128,14 @@ public class Game {
             screen.refresh();
             break;
           }
+          case Backspace: {
+            tg.putString(col, str, field[str][col] ? (crossword[str][col] == "x" ?
+                    String.valueOf(Symbols.SINGLE_LINE_CROSS) : crossword[str][col]) :
+                    String.valueOf(Symbols.SOLID_SQUARE));
+            crosswordForCheck[str][col]=crossword[str][col].charAt(0);
+            screen.refresh();
+            break;
+          }
           case Character: {
             try {
               tg.putString(col, str, keyPressed.getCharacter().toString());
@@ -137,14 +145,6 @@ public class Game {
             } catch (NumberFormatException e) {
               break;
             }
-          }
-          case Backspace: {
-            tg.putString(col, str, field[str][col] ? (crossword[str][col] == "x" ?
-                    String.valueOf(Symbols.SINGLE_LINE_CROSS) : crossword[str][col]) :
-                    String.valueOf(Symbols.SOLID_SQUARE));
-            crosswordForCheck[str][col]=crossword[str][col].charAt(0);
-            screen.refresh();
-            break;
           }
 
           default:
