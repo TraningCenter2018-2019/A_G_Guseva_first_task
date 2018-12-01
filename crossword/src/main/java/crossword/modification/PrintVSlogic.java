@@ -1,7 +1,7 @@
-package Modification;
+package crossword.modification;
 
-import Configuration.Matrix;
-import UserInteraction.UserMenu;
+import crossword.configuration.Matrix;
+import crossword.user_interaction.UserMenu;
 
 import java.util.ArrayList;
 

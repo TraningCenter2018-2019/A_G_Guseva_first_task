@@ -1,6 +1,6 @@
-package UserInteraction;
+package crossword.user_interaction;
 
-import Modification.PrintVSlogic;
+import crossword.modification.PrintVSlogic;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;

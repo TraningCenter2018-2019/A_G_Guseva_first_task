@@ -1,6 +1,6 @@
-package UserInteraction;
+package crossword.user_interaction;
 
-import Modification.PrintVSlogic;
+import crossword.modification.PrintVSlogic;
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.gui2.*;
@@ -12,7 +12,6 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
-import java.awt.*;
 import java.io.IOException;
 
 public class UserMenu {

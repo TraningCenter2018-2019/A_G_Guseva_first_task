@@ -1,4 +1,4 @@
-package UserInteraction;
+package crossword.user_interaction;
 
 import com.googlecode.lanterna.SGR;
 import com.googlecode.lanterna.Symbols;

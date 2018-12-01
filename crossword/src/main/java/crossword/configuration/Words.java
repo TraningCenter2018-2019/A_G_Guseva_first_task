@@ -1,8 +1,7 @@
-package Configuration;
+package crossword.configuration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Words {
   String[] words;

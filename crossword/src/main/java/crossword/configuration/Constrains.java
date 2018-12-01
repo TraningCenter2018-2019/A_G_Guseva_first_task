@@ -1,4 +1,4 @@
-package Configuration;
+package crossword.configuration;
 
 public class Constrains {
   int pos;

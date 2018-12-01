@@ -1,4 +1,4 @@
-package Configuration;
+package crossword.configuration;
 
 public class Cell {
   public char letter;

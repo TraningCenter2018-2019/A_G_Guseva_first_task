@@ -1,9 +1,11 @@
+package crossword;
+
 import java.io.IOException;
 
-import Configuration.Words;
-import Configuration.Configuration;
-import Modification.PrintVSlogic;
-import UserInteraction.UserMenu;
+import crossword.configuration.Words;
+import crossword.configuration.Configuration;
+import crossword.modification.PrintVSlogic;
+import crossword.user_interaction.UserMenu;
 
 public class Main {
   public static void main(String[] args) throws IOException {
