@@ -77,15 +77,13 @@ public class Matrix {
         bestVariant.copyMatrix(this);
         int maxAmount = this.amountOfWords;
         for (int var = 0; var < possibleWords.size() && !freeWords.isEmpty() && !found; var++) {
-          if (freeWords.contains(possibleWords.get(var))) {
-            stop = true;
-            matrOfVariants.copyMatrix(this);
-            freeWordsOut = new ArrayList<Integer>(freeWords);
-            found = matrOfVariants.addWord(words, possibleWords.get(var), j, scheme.pos, 0, freeWordsOut, startTime, j);
-            if (matrOfVariants.amountOfWords > maxAmount) {
-              maxAmount = matrOfVariants.amountOfWords;
-              bestVariant.copyMatrix(matrOfVariants);
-            }
+          stop = true;
+          matrOfVariants.copyMatrix(this);
+          freeWordsOut = new ArrayList<Integer>(freeWords);
+          found = matrOfVariants.addWord(words, possibleWords.get(var), j, scheme.pos, 0, freeWordsOut, startTime, j);
+          if (matrOfVariants.amountOfWords > maxAmount) {
+            maxAmount = matrOfVariants.amountOfWords;
+            bestVariant.copyMatrix(matrOfVariants);
           }
         }
         this.copyMatrix(bestVariant);

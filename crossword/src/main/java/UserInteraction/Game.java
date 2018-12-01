@@ -83,7 +83,7 @@ public class Game {
     return new TerminalPosition(col, str);
   }
 
-  TextGraphics solveCrossword(Terminal terminal, TextGraphics tg, Screen screen) throws IOException {
+  private void solveCrossword(Terminal terminal, TextGraphics tg, Screen screen) throws IOException {
     boolean keeprunning = true;
     StringBuilder sb = new StringBuilder();
     int col = screen.getCursorPosition().getColumn();
@@ -153,8 +153,6 @@ public class Game {
         }
       }
     }
-
-    return tg;
   }
 
   void start(Terminal terminal) throws IOException {
@@ -165,7 +163,6 @@ public class Game {
     tg.setForegroundColor(TextColor.ANSI.YELLOW);
     tg.putString(size + 2, 0, "КРОССВОРД. Режим игры.");
     tg.setForegroundColor(TextColor.ANSI.DEFAULT);
-    //screen.setCursorPosition(new TerminalPosition(1,1));
     tg = printField(screen, tg);
     tg = printDescription(tg);
     tg.setForegroundColor(TextColor.ANSI.MAGENTA);
@@ -177,7 +174,6 @@ public class Game {
     tg.setForegroundColor(TextColor.ANSI.DEFAULT);
     TerminalSize ts = screen.doResizeIfNecessary();
     screen.refresh();
-    //terminal.addResizeListener(new SimpleTerminalResizeListener(new TerminalSize(100,100)));
-    tg = solveCrossword(terminal, tg, screen);
+    solveCrossword(terminal, tg, screen);
   }
 }
