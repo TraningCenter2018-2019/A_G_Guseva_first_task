@@ -77,10 +77,12 @@ public class CrosswordFactory {
             break;
           }
           case Backspace: {
-            size = size / 10;
-            sb.delete(sb.length() - 1, sb.length());
-            tg.putString(0, 3, sb.toString() + " ", SGR.BOLD);
-            screen.refresh();
+            if(sb.length()!=0) {
+              size = size / 10;
+              sb.delete(sb.length() - 1, sb.length());
+              tg.putString(0, 3, sb.toString() + " ", SGR.BOLD);
+              screen.refresh();
+            }
             break;
           }
           case Character: {
@@ -167,14 +169,16 @@ public class CrosswordFactory {
             break;
           }
           case Backspace: {
-            if (!keeprunningForWord) {
-              sb.delete(sb.length() - 1, sb.length());
-              tg.putString(0, 5, sb.toString() + " ", SGR.BOLD);
-            } else {
-              sb.delete(sb.length() - 1, sb.length());
-              tg.putString(0, 3, sb.toString() + " ", SGR.BOLD);
+            if(sb.length()!=0) {
+              if (!keeprunningForWord) {
+                sb.delete(sb.length() - 1, sb.length());
+                tg.putString(0, 5, sb.toString() + " ", SGR.BOLD);
+              } else {
+                sb.delete(sb.length() - 1, sb.length());
+                tg.putString(0, 3, sb.toString() + " ", SGR.BOLD);
+              }
+              screen.refresh();
             }
-            screen.refresh();
             break;
           }
 

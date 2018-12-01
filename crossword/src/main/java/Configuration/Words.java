@@ -56,9 +56,9 @@ public class Words {
   }
 
   private ArrayList<Integer> getWordsForMultipleConstrain(Scheme scheme){
-    ArrayList<Integer> specialWords1 = new ArrayList<Integer>();
+    ArrayList<Integer> specialWords1 = BigMap.get(scheme.constrains.get(0).letter).get(scheme.constrains.get(0).pos);
     ArrayList<Integer> specialWords2 = new ArrayList<Integer>();
-    if (specialWords2 != null) {
+    if (specialWords1 != null) {
       for (Constrains cs : scheme.constrains) {
         specialWords2 = BigMap.get(cs.letter).get(cs.pos);
         if (specialWords2 != null)
@@ -76,7 +76,7 @@ public class Words {
     ArrayList<Integer> specialWords1 = new ArrayList<Integer>();
     if (!scheme.constrains.isEmpty()) {
       if (scheme.constrains.size() != 1) {
-        getWordsForMultipleConstrain(scheme);
+        specialWords1 = getWordsForMultipleConstrain(scheme);
       }
       else
         specialWords1 = BigMap.get(scheme.constrains.get(0).letter).get(scheme.constrains.get(0).pos);
