@@ -47,44 +47,52 @@ public class Matrix {
 
   }
 
-  private void addWordTOColumn(int i,Words words,ArrayList<Integer> freeWords){
+  private Scheme findScheme(int i, ArrayList<Integer> freeWords,Words words,int colOrStr){
     Scheme scheme = new Scheme();
-    boolean found = false;
     ArrayList<Integer> possibleWords;
-    scheme.findPlace(this, i, 1, 0);//0-str, 1- column
+    scheme.findPlace(this, i, colOrStr, 0);//0-str, 1- column
     possibleWords = words.getFittedWords(scheme, freeWords);
     int pop = 1;
     while ((possibleWords==null) && (scheme.constrains.size() >= 1)&&(pop<size))//сдвигаем схему вправо
     {
-      scheme.findPlace(this, i, 1, pop);//0-str, 1- column
+      scheme.findPlace(this, i, colOrStr, pop);//0-str, 1- column
       possibleWords = words.getFittedWords(scheme, freeWords);
       pop++;
     }
+    return scheme;
+  }
 
-    if ((scheme.constrains.size() >= 1)&&(possibleWords!=null)) {
-      Matrix matrOfVariants = new Matrix(size);
-      Matrix bestVariant = new Matrix(size);
-      bestVariant.copyMatrix(this);
+  private boolean addHorizontalWord(Words words, ArrayList<Integer> freeWords, long startTime, int numOfStr){
+    boolean stop=false;
+    Scheme scheme;
+    ArrayList<Integer> freeWordsOut;
+    boolean found=false;
+    for (int j = numOfStr + 1; j < size && !freeWords.isEmpty() && !stop; j++) {
+      scheme=findScheme(j,freeWords,words,0);
+      ArrayList<Integer> possibleWords = words.getFittedWords(scheme, freeWords);
 
-      int maxAmount = this.amountOfWords;
-      for (int var = 0; var < possibleWords.size() && !found; var++) {
-        if (freeWords.contains(possibleWords.get(var)))//возможно убрать
-        {
-          stop = true;
-          matrOfVariants.copyMatrix(this);
-          freeWordsOut = new ArrayList<Integer>(freeWords);
-          found = matrOfVariants.addWord(words, possibleWords.get(var), i, scheme.pos, 1, freeWordsOut, startTime, numOfStr);
-          if (matrOfVariants.amountOfWords > maxAmount) {
-            maxAmount = matrOfVariants.amountOfWords;
-            bestVariant.copyMatrix(matrOfVariants);
+      if ((scheme.constrains.size() >= 1)&&(possibleWords!=null)) {
+        Matrix matrOfVariants = new Matrix(size);
+        Matrix bestVariant = new Matrix(size);
+        bestVariant.copyMatrix(this);
+        int maxAmount = this.amountOfWords;
+        for (int var = 0; var < possibleWords.size() && !freeWords.isEmpty() && !found; var++) {
+          if (freeWords.contains(possibleWords.get(var))) {
+            stop = true;
+            matrOfVariants.copyMatrix(this);
+            freeWordsOut = new ArrayList<Integer>(freeWords);
+            found = matrOfVariants.addWord(words, possibleWords.get(var), j, scheme.pos, 0, freeWordsOut, startTime, j);
+            if (matrOfVariants.amountOfWords > maxAmount) {
+              maxAmount = matrOfVariants.amountOfWords;
+              bestVariant.copyMatrix(matrOfVariants);
+            }
           }
         }
-
+        this.copyMatrix(bestVariant);
+        if (found) return true;
       }
-      this.copyMatrix(bestVariant);
-      if (found)
-        return found;
     }
+    return found;
   }
 
   public boolean addWord(Words words, int w, int str, int col, int colOrStr, ArrayList<Integer> freeWords, long startTime, int numOfStr) {
@@ -101,100 +109,52 @@ public class Matrix {
 
     if ((str == size - 1) && (colOrStr == 0))
       return false;
-    if ((amountOfWords == words.words.length) && (System.currentTimeMillis() - startTime < 30000))
+    if ((amountOfWords == words.words.length) && ((System.currentTimeMillis() - startTime) < 300000))
       return true;
 
+    if(freeWords.isEmpty())
+      return false;
     boolean found = false;
-    if (!freeWords.isEmpty()) {
-      ArrayList<Integer> freeWordsOut;
-      int i;
-      Scheme scheme;
-      if (colOrStr == 1)
-        i = col + 1;//следующее
-      else
-        i = col;//первое
-      //идём по слову
-      boolean stop = false;
-      if (i < size) {
-        while (i < size && !this.matrixOfFreeCells[numOfStr][i] && !freeWords.isEmpty() && !stop) {
-          scheme = new Scheme();
-          found = false;
-          ArrayList<Integer> possibleWords;
-          scheme.findPlace(this, i, 1, 0);//0-str, 1- column
-          possibleWords = words.getFittedWords(scheme, freeWords);
-          int pop = 1;
-          while ((possibleWords==null) && (scheme.constrains.size() >= 1)&&(pop<size))//сдвигаем схему вправо
-          {
-            scheme.findPlace(this, i, 1, pop);//0-str, 1- column
-            possibleWords = words.getFittedWords(scheme, freeWords);
-            pop++;
+    ArrayList<Integer> freeWordsOut;
+    int i;
+    Scheme scheme;
+    if (colOrStr == 1)
+      i = col + 1;//следующее
+    else
+      i = col;//первое
+    //идём по слову
+    boolean stop = false;
+    while (i < size && !this.matrixOfFreeCells[numOfStr][i] && !freeWords.isEmpty() && !stop) {
+      scheme=findScheme(i,freeWords,words,1);
+      ArrayList<Integer> possibleWords = words.getFittedWords(scheme, freeWords);
+
+      if ((scheme.constrains.size() >= 1)&&(possibleWords!=null))
+      {
+        Matrix matrOfVariants = new Matrix(size);
+        Matrix bestVariant = new Matrix(size);
+        bestVariant.copyMatrix(this);
+
+        int maxAmount = this.amountOfWords;
+        for (int var = 0; var < possibleWords.size() && !found; var++) {
+          stop = true;
+          matrOfVariants.copyMatrix(this);
+          freeWordsOut = new ArrayList<Integer>(freeWords);
+          found = matrOfVariants.addWord(words, possibleWords.get(var), i, scheme.pos, 1, freeWordsOut, startTime, numOfStr);
+          if (matrOfVariants.amountOfWords > maxAmount) {
+            maxAmount = matrOfVariants.amountOfWords;
+            bestVariant.copyMatrix(matrOfVariants);
           }
-
-          if ((scheme.constrains.size() >= 1)&&(possibleWords!=null)) {
-            Matrix matrOfVariants = new Matrix(size);
-            Matrix bestVariant = new Matrix(size);
-            bestVariant.copyMatrix(this);
-
-            int maxAmount = this.amountOfWords;
-            for (int var = 0; var < possibleWords.size() && !found; var++) {
-              if (freeWords.contains(possibleWords.get(var)))//возможно убрать
-              {
-                stop = true;
-                matrOfVariants.copyMatrix(this);
-                freeWordsOut = new ArrayList<Integer>(freeWords);
-                found = matrOfVariants.addWord(words, possibleWords.get(var), i, scheme.pos, 1, freeWordsOut, startTime, numOfStr);
-                if (matrOfVariants.amountOfWords > maxAmount) {
-                  maxAmount = matrOfVariants.amountOfWords;
-                  bestVariant.copyMatrix(matrOfVariants);
-                }
-              }
-
-            }
-            this.copyMatrix(bestVariant);
-            if (found)
-              return found;
-          }
-          i++;
         }
+        this.copyMatrix(bestVariant);
+        if (found)
+          return found;
       }
-
-      //add horizontal
-      found=false;
-      for (int j = numOfStr + 1; j < size && !freeWords.isEmpty() && !stop && !found; j++) {
-        scheme = new Scheme();
-        ArrayList<Integer> possibleWords=null;
-        scheme.findPlace(this, j, 0, 0);//0-str, 1- column
-        possibleWords = words.getFittedWords(scheme, freeWords);
-        int pop = 1;
-        while ((possibleWords==null) && (scheme.constrains.size() >= 1)&&(pop<size))
-        {
-          scheme.findPlace(this, j, 0, pop);//0-str, 1- column
-          possibleWords = words.getFittedWords(scheme, freeWords);
-          pop++;
-        }
-        if ((scheme.constrains.size() >= 1)&&(possibleWords!=null)) {
-          Matrix matrOfVariants = new Matrix(size);
-          Matrix bestVariant = new Matrix(size);
-          bestVariant.copyMatrix(this);
-          int maxAmount = this.amountOfWords;
-          for (int var = 0; var < possibleWords.size() && !freeWords.isEmpty() && !found; var++) {
-            if (freeWords.contains(possibleWords.get(var))) {
-              stop = true;
-              matrOfVariants.copyMatrix(this);
-              freeWordsOut = new ArrayList<Integer>(freeWords);
-              found = matrOfVariants.addWord(words, possibleWords.get(var), j, scheme.pos, 0, freeWordsOut, startTime, j);
-              if (matrOfVariants.amountOfWords > maxAmount) {
-
-                maxAmount = matrOfVariants.amountOfWords;
-                bestVariant.copyMatrix(matrOfVariants);
-              }
-            }
-          }
-          this.copyMatrix(bestVariant);
-          if (found) return found;
-        }
-      }
+      i++;
     }
+
+    //add horizontal
+    if(!stop)
+      found = addHorizontalWord(words,freeWords, startTime, numOfStr );
     return found;
   }
 }

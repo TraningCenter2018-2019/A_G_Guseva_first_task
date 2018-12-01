@@ -13,7 +13,6 @@ public class Configuration {
   private Matrix fillingMatrix(Words words) {
     Matrix m = new Matrix(size);
     m.amountOfWords = 0;
-    int amountOfUsedWords = 0;
     long startTime = System.currentTimeMillis();
     boolean found = false;
     int amount = words.words.length;
@@ -24,7 +23,6 @@ public class Configuration {
     for (int w = 0; w < amount; w++) {
       freeWords.add(w, w);
     }
-    long v = System.nanoTime() - startTime;
     int i = 0;
     scheme = new Scheme();
     scheme.findPlace(m, i, 0, 0);//0-str, 1- column
@@ -34,8 +32,7 @@ public class Configuration {
       Matrix bestVariant = new Matrix(size);
       bestVariant.copyMatrix(m);
       int maxAmount = m.amountOfWords;
-      for (int var = 0; var < possibleWords.size() && !found && (System.currentTimeMillis() - startTime < 30000); var++) {
-        if (freeWords.contains(possibleWords.get(var))) {
+      for (int var = 0; (var < words.words.length) &&(!found); var++) {
           matrOfVariants.copyMatrix(m);
           freeWordsOut = new ArrayList<Integer>(freeWords);
           found = matrOfVariants.addWord(words, possibleWords.get(var), 0, scheme.pos, 0, freeWordsOut, startTime, 0);
@@ -43,7 +40,6 @@ public class Configuration {
             maxAmount = matrOfVariants.amountOfWords;
             bestVariant.copyMatrix(matrOfVariants);
           }
-        }
         print(bestVariant);
       }
       m.copyMatrix(bestVariant);

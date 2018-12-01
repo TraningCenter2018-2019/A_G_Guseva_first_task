@@ -85,16 +85,16 @@ public class Words {
         specialWords1.add(i);
     }
 
-
+    ArrayList<Integer> specialWords = new ArrayList<Integer>();
     if (specialWords1 != null) {
       for (int var = 0; var < specialWords1.size(); var++) {
-        if (!freeWords.contains(specialWords1.get(var)) || words[var].length() > scheme.maxSize) {
-          specialWords1.remove(var);
+        if ((freeWords.contains(specialWords1.get(var))) && (words[var].length() <= scheme.maxSize)) {
+          specialWords.add(specialWords1.get(var));
         }
       }
     }
 
-    return specialWords1;
+    return specialWords;
   }
 
   public void printWords(ArrayList<Integer> wordList) {
