@@ -150,8 +150,10 @@ public class CrosswordFactory {
       sb = new StringBuilder();
       tg.putString(0, 4, "Введите описание");
     }
-    else
-      sb=printAboutBadWord(screen,tg,sb);
+    else {
+      sb = printAboutBadWord(screen, tg, sb);
+      sb=null;
+    }
     return sb;
   }
 
@@ -180,13 +182,14 @@ public class CrosswordFactory {
               keepRunningForDescription = false;
               break;
             }
-            if (sb.length()==0) {
+            if (sb==null) {
+              sb = new StringBuilder();
+            }
+            else {
               screen.setCursorPosition(new TerminalPosition(0, 5));
               screen.refresh();
               keepRunningForWord = false;
             }
-            else
-              sb=new StringBuilder();
             break;
           }
           case Character: {

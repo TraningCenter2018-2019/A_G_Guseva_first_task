@@ -18,6 +18,7 @@ public class Scheme {
   }
 
   public void findPlace(Matrix m, int num, int colOrStr, int position) {
+    constrains=new ArrayList<Constrains>();
     pos = position;
     int maxSize1 = 0;
     if (colOrStr == 0)//по строке
@@ -25,14 +26,14 @@ public class Scheme {
       for (int i = position; i < m.size; i++) {
         maxSize1++;
         if (!m.matrixOfFreeCells[num][i]) {
-          addConstrain(i, m.matrixOfWords[num][i].letter);
+          addConstrain(i-position, m.matrixOfWords[num][i].letter);
         }
       }
     } else {
       for (int i = position; i < m.size; i++) {
         maxSize1++;
         if (!m.matrixOfFreeCells[i][num]) {
-          addConstrain(i, m.matrixOfWords[i][num].letter);
+          addConstrain(i-position, m.matrixOfWords[i][num].letter);
         }
       }
     }

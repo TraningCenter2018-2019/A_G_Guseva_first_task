@@ -1,5 +1,7 @@
 package crossword.user_interaction;
 
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import com.googlecode.lanterna.terminal.Terminal;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

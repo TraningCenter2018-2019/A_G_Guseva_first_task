@@ -160,7 +160,6 @@ public class UserMenu {
 
 
   public void chooseMode(PrintVSlogic printCr) throws IOException {
-    //Terminal terminal = new DefaultTerminalFactory().createTerminal();
     if (cr == null)
       printOptions(0);
     else

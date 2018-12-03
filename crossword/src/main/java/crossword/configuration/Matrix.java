@@ -32,16 +32,16 @@ public class Matrix {
 
   private void addSpecialWordToMatrix(int col,int str,int colOrStr,String word,int w){
     if (colOrStr == 1) {
-      for (int i = col; i < word.length(); i++) {
+      for (int i = col; i < word.length()+col; i++) {
         matrixOfFreeCells[i][str] = false;//по столбцу добавление
-        matrixOfWords[i][str].init(w, colOrStr, word.charAt(i));
+        matrixOfWords[i][str].init(w, colOrStr, word.charAt(i-col));
 
       }
 
     } else {
-      for (int i = col; i < word.length(); i++) {
+      for (int i = col; i < word.length()+col; i++) {
         matrixOfFreeCells[str][i] = false;
-        matrixOfWords[str][i].init(w, colOrStr, word.charAt(i));
+        matrixOfWords[str][i].init(w, colOrStr, word.charAt(i-col));
       }
     }
 
@@ -53,7 +53,7 @@ public class Matrix {
     scheme.findPlace(this, i, colOrStr, 0);//0-str, 1- column
     possibleWords = words.getFittedWords(scheme, freeWords);
     int pop = 1;
-    while ((possibleWords==null) && (scheme.constrains.size() >= 1)&&(pop<size))//сдвигаем схему вправо
+    while ((possibleWords==null||(possibleWords.size()==0)) && (scheme.constrains.size() >= 1)&&(pop<size))//сдвигаем схему вправо
     {
       scheme.findPlace(this, i, colOrStr, pop);//0-str, 1- column
       possibleWords = words.getFittedWords(scheme, freeWords);
@@ -71,7 +71,7 @@ public class Matrix {
       scheme=findScheme(j,freeWords,words,0);
       ArrayList<Integer> possibleWords = words.getFittedWords(scheme, freeWords);
 
-      if ((scheme.constrains.size() >= 1)&&(possibleWords!=null)) {
+      if ((scheme.constrains.size() >= 1)&&(possibleWords!=null)&&(possibleWords.size()!=0)) {
         Matrix matrOfVariants = new Matrix(size);
         Matrix bestVariant = new Matrix(size);
         bestVariant.copyMatrix(this);
@@ -126,7 +126,7 @@ public class Matrix {
       scheme=findScheme(i,freeWords,words,1);
       ArrayList<Integer> possibleWords = words.getFittedWords(scheme, freeWords);
 
-      if ((scheme.constrains.size() >= 1)&&(possibleWords!=null))
+      if ((scheme.constrains.size() >= 1)&&(possibleWords!=null)&&(possibleWords.size()!=0))
       {
         Matrix matrOfVariants = new Matrix(size);
         Matrix bestVariant = new Matrix(size);

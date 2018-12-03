@@ -16,12 +16,6 @@ public class Words {
     BigMap = new HashMap<Character, HashMap<Integer, ArrayList<Integer>>>();
   }
 
-  private boolean isContains(String w) {
-    for (int i = 0; i < numOfWord; i++)
-      if (words[i].equals(w))
-        return true;
-    return false;
-  }
 
   public void createList(ArrayList<String> listOfWords) {
     int n = 0;
@@ -57,7 +51,7 @@ public class Words {
   private ArrayList<Integer> getWordsForMultipleConstrain(Scheme scheme){
     ArrayList<Integer> specialWords1 = BigMap.get(scheme.constrains.get(0).letter).get(scheme.constrains.get(0).pos);
     ArrayList<Integer> specialWords2 = new ArrayList<Integer>();
-    if (specialWords1 != null) {
+    if ((specialWords1 != null)&&(specialWords1.size()!=0)) {
       for (Constrains cs : scheme.constrains) {
         specialWords2 = BigMap.get(cs.letter).get(cs.pos);
         if (specialWords2 != null)
@@ -87,23 +81,12 @@ public class Words {
     ArrayList<Integer> specialWords = new ArrayList<Integer>();
     if (specialWords1 != null) {
       for (int var = 0; var < specialWords1.size(); var++) {
-        if ((freeWords.contains(specialWords1.get(var))) && (words[var].length() <= scheme.maxSize)) {
+        if ((freeWords.contains(specialWords1.get(var))) && (words[specialWords1.get(var)].length() <= scheme.maxSize)) {
           specialWords.add(specialWords1.get(var));
         }
       }
     }
 
     return specialWords;
-  }
-
-  public void printWords(ArrayList<Integer> wordList) {
-    for (int num : wordList
-    ) {
-      System.out.println(words[num]);
-    }
-  }
-
-  public void intersectionOfWords(ArrayList<Integer> first, ArrayList<Integer> second) {
-    first.retainAll(second);
   }
 }
