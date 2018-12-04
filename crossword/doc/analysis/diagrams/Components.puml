@@ -1,0 +1,13 @@
+@startuml
+[Main] --> printVSLogic
+printVSLogic .left.> [modification]
+
+printVSLogic <--> [user_interaction]
+
+printVSLogic <..> [configuration]
+
+[user_interaction] ..> [CrasswordFactory]
+[user_interaction] ..> [Game]
+
+
+@enduml
