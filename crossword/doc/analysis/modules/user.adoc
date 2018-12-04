@@ -12,10 +12,7 @@
 
 == Диаграмма классов
 
-[plantuml,format="png"]
---
-. include::../analysis/diagrams/UserInteraction.puml[]
---
+https://github.com/TraningCenter2018-2019/A_G_Guseva_first_task/blob/feature/TG-14/crossword/doc/analysis/diagrams/UserInteraction.puml
 
 Класс *UserMenu* используется для выбора режима. При вызове метода *CrosswordMode* пользователю будет предложено выбрать один из двух режимов. +
 
