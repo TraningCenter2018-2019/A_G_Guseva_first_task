@@ -22,10 +22,9 @@ NOTE: Шаблон для вертикального слова содержит
 
 == Диаграмма классов
 
-[plantuml,format="png"]
---
-include::../analysis/diagrams/Config.puml[]
---
+
+![PlantUML model](https://github.com/TraningCenter2018-2019/A_G_Guseva_first_task/blob/feature/TG-14/crossword/doc/analysis/diagrams/Config.puml)
+
 
 Класс *Configurator* используется для построения кроссворда. С помощью метода *findOptimalMatrix()* прозводится поиск матрицы (которая является полем кроссворда), метод *checkOptimal()* проверяет матрицу на оптимальность. Методом *getCrossword()* можно получить кроссворд. +
 Класс *Matrix* направлен на хранение и создание матрицы. +
