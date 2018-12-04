@@ -1,0 +1,59 @@
+@startuml
+
+class Configurator{
+-bool checkOptimal();
++Matrix findOptimalMatrix();
+Configurator(ArrayList<String> words, int size);
+ArrayList<String> words;
+Matrix optimalMatrix;
++Matrix getCrossword();
+int size;
+}
+
+class Matrix{
+-Matrix(ArrayList<String> words, int size);
+-Cell[][] matr;
+-ArrayList<String> words;
+-int size;
++void fillingMatrix();
++char[][] getForPrint();
+}
+
+class Cell{
++int horiz;
++int vert;
++char letter;
+-int getHorizontalWordNum();
+-int gerVertWordNum();
+-void setHorizontal();
+-void setVert();
+-bool isBlack();
+}
+
+class FindingWord{
++bool findWord(Scheme sc,ArrayList<String> words);
++getWord();
+-String word;
+}
+
+class Scheme{
++bool findPlace(Matrix m);
+-void setConstrain();
++bool checkConstrains();
+ArrayList <Constrain> constr;
+}
+
+class Constrains{
+int num;
+char letter;
++void getConstran();
++ void setConstrain();
+}
+
+Configurator o--Matrix
+Matrix o--Cell
+Matrix *--FindingWord
+FindingWord..>Scheme
+Scheme--*Matrix
+Constrains --o Scheme
+@enduml

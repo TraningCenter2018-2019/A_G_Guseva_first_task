@@ -1,0 +1,70 @@
+@startuml
+
+class UserMenu{
+-int user;
++ModeFactory chooseMode();
+-void printData();
+-ModeFactory getMode();
+}
+
+abstract class ModeFactory{
+void startMode();
+}
+
+class Game{
++void startMode();
+Game(ArrayList<String> w, ArrayList<String> d);
+-void print();
+-void printCrosswordMap();
+-void printDescription();
+-compareCrossword(CrossworsFactory cr);
+-void printResult();
+}
+
+class CrosswordFactory{
+int size;
+ArrayList<Word> words;
+ArrayList<String> descr;
++void startMode();
+-void addWord();
+-void addDescription();
++ArrayList<String> getListOfWords();
++ArrayList<String> getListOfDescr();
+-void print();
+-void printCrosswordMap();
+-void printDescription();
+}
+
+class Word{
++String word;
++setWord();
++Word getWord();
+-bool isFitted(int size);
+-void print();
+}
+
+interface CheckResult{
+compareCrossword(CrossworsFactory cr);
+void printResult();
+}
+
+interface PrintToConsole{
+void print();
+}
+
+interface PrintCrossword{
+void print();
+void printCrosswordMap();
+void printDescription();
+}
+
+UserMenu..>ModeFactory
+ModeFactory<|--Game
+ModeFactory<|--CrosswordFactory
+PrintCrossword..|>PrintToConsole
+CrosswordFactory o--Word
+Game..|>CheckResult
+Game..|>PrintCrossword
+CrosswordFactory..|>PrintCrossword
+Word..|>PrintToConsole
+@enduml

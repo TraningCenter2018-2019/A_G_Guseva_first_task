@@ -21,7 +21,7 @@ public class UITest {
   }
 
   @Before
-  public void runT() throws IOException {
+  public void setUp() throws IOException {
     printCr = null;
   }
 
@@ -34,23 +34,11 @@ public class UITest {
       u.stop = true;
       verify(u,times(1)).crosswordConfig();
     }
-    else {
+    else if(!u.stop){
       u.chooseMode(printCr);
       verify(u).printOptions(1);
     }
   }
 
-
-  @Test
-  public void playGame() {
-  }
-
-  @Test
-  public void printHelp() throws IOException {
-  }
-
-  @Test
-  public void printResult() {
-  }
 
 }

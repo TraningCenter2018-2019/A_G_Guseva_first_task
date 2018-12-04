@@ -8,7 +8,7 @@ public class Matrix {
   public int size;
   int amountOfWords;
 
-  Matrix(int n) {
+  public Matrix(int n) {
     size = n;
     matrixOfWords = new Cell[n][n];
     for (int i = 0; i < n; i++)
